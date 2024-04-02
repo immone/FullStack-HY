@@ -46,7 +46,6 @@ const App = () => {
     }
   ]
   
-  const m = courses.map(c => <Course> course={c} </Course>)
   return (
     <div>
       <ul>
