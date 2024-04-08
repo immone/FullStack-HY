@@ -1,11 +1,14 @@
 const mongoose = require('mongoose')
-require('dotenv').config()
 
 const blogSchema = mongoose.Schema({
     title: {type: String, required: true},
     author: String,
     url: {type: String, required: true},
-    likes: {type: Number, default: 0}
+    likes: {type: Number, default: 0},
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+  }
 })
   
 // transforms the default MongoDB identifier attribute

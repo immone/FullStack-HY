@@ -1,11 +1,12 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
-const initialBlogs = [
+let initialBlogs = [
 {
     title: 'Introduction to Logic: And to the Methodology of Deductive Sciences',
     author: 'Alred Tarski',
     url: 'https://www.amazon.com/Introduction-Logic-Methodology-Deductive-Mathematics/dp/048628462X/ref=sr_1_1?crid=3F9SQFAAM8N53&dib=eyJ2IjoiMSJ9.Go_LbUO87o6aj9MjZHbI8jkPrG3-B-fFHwuuqjoL7ndWbQSfCc1-a5ajlAvjVUy2Wu_kRznstQXJ83KJDRGGsCJypclVx4TvB3yUEt-XfaCWHlQgozpoKvUxUXzvdOzWCjdWwZPlGmLf1KPmAqSzP1u9DI6wIWDS4NbdF6XKgri1W7uO_twf5eraUNWRjPqqlhelhXi_hoqqQm6lcMeUsGzxrTeW4NyYk-vUFIaXRuA.QDiKmEy4NlFvCmj2FvHdEuFv0LD31oJoxBkoVpJJKtU&dib_tag=se&keywords=tarski&qid=1712143333&s=books&sprefix=tars%2Cstripbooks-intl-ship%2C186&sr=1-1',
-    likes: 12
+    likes: 1
     },
     {
     title: 'On Formally Undecidable Propositions of Principia Mathematica and Related Systems',
@@ -21,11 +22,19 @@ const initialBlogs = [
     }
 ]
 
+
+// Returns all blogs in the database
 const blogsInDb = async () => {
   const blogs = await Blog.find({})
   return blogs.map(blog => blog.toJSON())
 }
 
+// Returns all users in the database
+const usersInDb = async () => {
+    const users = await User.find({})
+    return users.map(u => u.toJSON())
+  }
+
 module.exports = {
-  initialBlogs, blogsInDb
+  initialBlogs, blogsInDb, usersInDb
 }

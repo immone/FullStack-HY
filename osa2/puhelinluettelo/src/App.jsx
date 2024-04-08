@@ -32,7 +32,6 @@ const App = () => {
   } 
 
   const filterNames = () => {
-    console.log(persons)
     const value = newFilterName.toLowerCase()
     return (
       persons.filter(x => x.name.toLowerCase().includes(value))
@@ -83,6 +82,10 @@ const App = () => {
             setNewName('')
             setNewNumber('')
           })
+          .catch(error => {
+            displayMessage(`${error.response.data.error}`)
+          }
+            )
           displayMessage(`Added ${newPerson.name}`)
       }
     }
