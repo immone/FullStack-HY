@@ -9,6 +9,7 @@ usersRouter.post('/', async (request, response) => {
     const users = await User.find({})
     return users.map(u => u.toJSON())
   }
+  
   const users = await usersInDb()
 
   if (users.map(u => u.username).includes(username)) {

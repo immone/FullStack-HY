@@ -25,8 +25,7 @@ app.use(express.json())
 
 app.use(middleware.errorHandler)
 
-// remember to make routes to use your middlewares :)))
-app.use('/api/blogs', middleware.tokenExtractor, middleware.userExtractor, blogRouter)
+app.use('/api/blogs', blogRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
