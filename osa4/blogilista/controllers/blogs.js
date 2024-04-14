@@ -1,28 +1,18 @@
 const blogRouter = require('express').Router()
-const blog = require('../models/blog')
 const Blog = require('../models/blog')
-const User = require('../models/user')
 const { userExtractor } = require('../utils/middleware')
 
 blogRouter.post('/', userExtractor, async (request, response) => {
-    const {title, author, likes, url} = request.body
     const user = request.user
-    const blog = new Blog({
-      title, 
-      author,
-      likes,
-      url,
-      user: request.user._id
-    })
+    const blog = new Blog(request.body)
 
     if (!user ) {
       return response.status(403).json({ error: 'user missing' })
     }  
-  
     if (!blog.title || !blog.url ) {
+      console.log(blog.title, blog.url)
       return response.status(400).json({ error: 'title or url missing' })
     } 
-
     try { 
       await user.save()
       const savedBlog = await blog.save()
