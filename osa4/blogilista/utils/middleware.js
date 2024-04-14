@@ -37,14 +37,12 @@ const userExtractor = async (request, response, next) => {
   // refactored from blogs.json to here
 
   const token = getTokenFrom(request)
-  console.log(token)
   if (!token) {
     return response.status(401).json({ error: 'token missing' })
   }
 
   const decodedToken = jwt.verify(token, process.env.SECRET)
   if (!decodedToken.id) {
-    console.log("adsjdasjdasjhsjs")
     return response.status(401).json({ error: 'token invalid' })
   }
   
