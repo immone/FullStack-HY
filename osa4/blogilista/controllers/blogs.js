@@ -5,7 +5,6 @@ const { userExtractor } = require('../utils/middleware')
 blogRouter.post('/', userExtractor, async (request, response) => {
     const user = request.user
     const blog = new Blog(request.body)
-
     if (!user ) {
       return response.status(403).json({ error: 'user missing' })
     }  
@@ -13,9 +12,12 @@ blogRouter.post('/', userExtractor, async (request, response) => {
       return response.status(400).json({ error: 'title or url missing' })
     } 
     try { 
+      user.blogs = user.blogs.concat(savedBlog._id)
+      blog.likes = blog.likes | 0
+      blog.user = user
+      
       await user.save()
       const savedBlog = await blog.save()
-      user.blogs = user.blogs.concat(savedBlog._id)
       response.status(201).json(savedBlog)
     }
     catch(exception) {
@@ -25,7 +27,7 @@ blogRouter.post('/', userExtractor, async (request, response) => {
 
 blogRouter.get('/', async (request, response) => {
   const blogs = await Blog
-    .find({}).populate('user', {username: 1, user: 1})
+    .find({}).populate('user', {username: 1, name: 1})
   response.json(blogs)
 })
 
