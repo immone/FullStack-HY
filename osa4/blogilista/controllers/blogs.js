@@ -12,10 +12,9 @@ blogRouter.post('/', userExtractor, async (request, response) => {
       return response.status(400).json({ error: 'title or url missing' })
     } 
     try { 
-      user.blogs = user.blogs.concat(savedBlog._id)
-      blog.likes = blog.likes | 0
+      user.blogs = user.blogs.concat(blog._id)
       blog.user = user
-      
+
       await user.save()
       const savedBlog = await blog.save()
       response.status(201).json(savedBlog)
