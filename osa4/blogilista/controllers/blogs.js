@@ -33,8 +33,11 @@ blogRouter.get('/', async (request, response) => {
 blogRouter.delete('/:id', userExtractor, async (request, response) => {
   const blog = await Blog.findById(request.params.id)
   const user = request.user
+
   if (user._id.toString() === blog.user.toString()) {
     await Blog.findByIdAndDelete(request.params.id)
+    user.blogs = user.blogs.filter(b => b._id.toString() !== blog._id.toString())
+    await user.save()
     response.status(204).end()
   } else {
     response.status(401).json({ error: 'unauthorized to delete blog' })
